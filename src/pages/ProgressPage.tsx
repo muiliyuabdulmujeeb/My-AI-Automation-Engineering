@@ -34,6 +34,10 @@ export function ProgressPage() {
         <div className="stat-panel"><span>Mini-projects completed</span><strong>{progress.completedMiniProjectIds.length}</strong></div>
         <div className="stat-panel"><span>Parts completed</span><strong>{progress.completedPartIds.length}</strong></div>
         <div className="stat-panel"><span>Current streak</span><strong>{streak} days</strong></div>
+        <div className="stat-panel"><span>Labs completed</span><strong>{progress.completedLabIds.length}</strong></div>
+        <div className="stat-panel"><span>Quizzes completed</span><strong>{progress.completedQuizIds.length}</strong></div>
+        <div className="stat-panel"><span>Skill checks completed</span><strong>{progress.completedSkillCheckIds.length}</strong></div>
+        <div className="stat-panel"><span>Portfolio projects</span><strong>{progress.completedPortfolioProjectIds.length}</strong></div>
       </div>
 
       <div className="two-column">

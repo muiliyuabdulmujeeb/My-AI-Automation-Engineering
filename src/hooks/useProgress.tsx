@@ -15,6 +15,11 @@ type ProgressContextValue = {
   toggleLesson: (lessonId: string) => void;
   toggleExercise: (exerciseId: string) => void;
   toggleMiniProject: (projectId: string) => void;
+  toggleLab: (labId: string) => void;
+  completeQuiz: (quizId: string, score: number) => void;
+  toggleSkillCheck: (skillCheckId: string) => void;
+  togglePortfolioProject: (projectId: string) => void;
+  setActiveLearningPath: (pathId: string | null) => void;
   saveNote: (lessonId: string, note: string) => void;
   resetProgress: () => void;
 };
@@ -31,78 +36,166 @@ function syncCompletedParts(progress: LearningProgress): LearningProgress {
 export function ProgressProvider({ children }: PropsWithChildren) {
   const [progress, setProgress] = useLocalStorage<LearningProgress>("ai-automation-progress", defaultProgress);
 
+  const ensureProgressShape = useCallback((current: LearningProgress): LearningProgress => ({
+    ...defaultProgress,
+    ...current,
+    notesByLessonId: current.notesByLessonId ?? {},
+    quizScores: current.quizScores ?? {},
+    activityDates: current.activityDates ?? [],
+    completedLessonIds: current.completedLessonIds ?? [],
+    completedExerciseIds: current.completedExerciseIds ?? [],
+    completedMiniProjectIds: current.completedMiniProjectIds ?? [],
+    completedLabIds: current.completedLabIds ?? [],
+    completedQuizIds: current.completedQuizIds ?? [],
+    completedSkillCheckIds: current.completedSkillCheckIds ?? [],
+    completedPortfolioProjectIds: current.completedPortfolioProjectIds ?? [],
+    completedPartIds: current.completedPartIds ?? [],
+  }), []);
+
   const setCurrentLesson = useCallback(
     (partId: string, lessonId: string) => {
       setProgress((current) => {
-        if (current.currentPartId === partId && current.currentLessonId === lessonId) {
-          return current;
+        const shaped = ensureProgressShape(current);
+        if (shaped.currentPartId === partId && shaped.currentLessonId === lessonId) {
+          return shaped;
         }
 
         return withActivity({
-          ...current,
+          ...shaped,
           currentPartId: partId,
           currentLessonId: lessonId,
         });
       });
     },
-    [setProgress],
+    [ensureProgressShape, setProgress],
   );
 
   const toggleLesson = useCallback(
     (lessonId: string) => {
-      setProgress((current) =>
-        syncCompletedParts(
+      setProgress((current) => {
+        const shaped = ensureProgressShape(current);
+        return syncCompletedParts(
           withActivity({
-            ...current,
-            completedLessonIds: toggleId(current.completedLessonIds, lessonId),
+            ...shaped,
+            completedLessonIds: toggleId(shaped.completedLessonIds, lessonId),
           }),
-        ),
-      );
+        );
+      });
     },
-    [setProgress],
+    [ensureProgressShape, setProgress],
   );
 
   const toggleExercise = useCallback(
     (exerciseId: string) => {
-      setProgress((current) =>
-        syncCompletedParts(
+      setProgress((current) => {
+        const shaped = ensureProgressShape(current);
+        return syncCompletedParts(
           withActivity({
-            ...current,
-            completedExerciseIds: toggleId(current.completedExerciseIds, exerciseId),
+            ...shaped,
+            completedExerciseIds: toggleId(shaped.completedExerciseIds, exerciseId),
           }),
-        ),
-      );
+        );
+      });
     },
-    [setProgress],
+    [ensureProgressShape, setProgress],
   );
 
   const toggleMiniProject = useCallback(
     (projectId: string) => {
-      setProgress((current) =>
-        syncCompletedParts(
+      setProgress((current) => {
+        const shaped = ensureProgressShape(current);
+        return syncCompletedParts(
           withActivity({
-            ...current,
-            completedMiniProjectIds: toggleId(current.completedMiniProjectIds, projectId),
+            ...shaped,
+            completedMiniProjectIds: toggleId(shaped.completedMiniProjectIds, projectId),
           }),
-        ),
-      );
+        );
+      });
     },
-    [setProgress],
+    [ensureProgressShape, setProgress],
+  );
+
+  const toggleLab = useCallback(
+    (labId: string) => {
+      setProgress((current) => {
+        const shaped = ensureProgressShape(current);
+        return withActivity({
+          ...shaped,
+          completedLabIds: toggleId(shaped.completedLabIds, labId),
+        });
+      });
+    },
+    [ensureProgressShape, setProgress],
+  );
+
+  const completeQuiz = useCallback(
+    (quizId: string, score: number) => {
+      setProgress((current) => {
+        const shaped = ensureProgressShape(current);
+        return withActivity({
+          ...shaped,
+          completedQuizIds: shaped.completedQuizIds.includes(quizId)
+            ? shaped.completedQuizIds
+            : [...shaped.completedQuizIds, quizId],
+          quizScores: {
+            ...shaped.quizScores,
+            [quizId]: score,
+          },
+        });
+      });
+    },
+    [ensureProgressShape, setProgress],
+  );
+
+  const toggleSkillCheck = useCallback(
+    (skillCheckId: string) => {
+      setProgress((current) => {
+        const shaped = ensureProgressShape(current);
+        return withActivity({
+          ...shaped,
+          completedSkillCheckIds: toggleId(shaped.completedSkillCheckIds, skillCheckId),
+        });
+      });
+    },
+    [ensureProgressShape, setProgress],
+  );
+
+  const togglePortfolioProject = useCallback(
+    (projectId: string) => {
+      setProgress((current) => {
+        const shaped = ensureProgressShape(current);
+        return withActivity({
+          ...shaped,
+          completedPortfolioProjectIds: toggleId(shaped.completedPortfolioProjectIds, projectId),
+        });
+      });
+    },
+    [ensureProgressShape, setProgress],
+  );
+
+  const setActiveLearningPath = useCallback(
+    (pathId: string | null) => {
+      setProgress((current) => withActivity({ ...ensureProgressShape(current), activeLearningPathId: pathId }));
+    },
+    [ensureProgressShape, setProgress],
   );
 
   const saveNote = useCallback(
     (lessonId: string, note: string) => {
-      setProgress((current) =>
-        withActivity({
-          ...current,
-          notesByLessonId: {
-            ...current.notesByLessonId,
-            [lessonId]: note,
-          },
-        }),
-      );
+      setProgress((current) => {
+        const shaped = ensureProgressShape(current);
+        return (
+          withActivity({
+            ...shaped,
+            notesByLessonId: {
+              ...shaped.notesByLessonId,
+              [lessonId]: note,
+            },
+          })
+        );
+      });
     },
-    [setProgress],
+    [ensureProgressShape, setProgress],
   );
 
   const resetProgress = useCallback(() => {
@@ -112,17 +205,37 @@ export function ProgressProvider({ children }: PropsWithChildren) {
     });
   }, [setProgress]);
 
+  const shapedProgress = useMemo(() => ensureProgressShape(progress), [ensureProgressShape, progress]);
+
   const value = useMemo<ProgressContextValue>(
     () => ({
-      progress,
+      progress: shapedProgress,
       setCurrentLesson,
       toggleLesson,
       toggleExercise,
       toggleMiniProject,
+      toggleLab,
+      completeQuiz,
+      toggleSkillCheck,
+      togglePortfolioProject,
+      setActiveLearningPath,
       saveNote,
       resetProgress,
     }),
-    [progress, resetProgress, saveNote, setCurrentLesson, toggleExercise, toggleLesson, toggleMiniProject],
+    [
+      completeQuiz,
+      shapedProgress,
+      resetProgress,
+      saveNote,
+      setActiveLearningPath,
+      setCurrentLesson,
+      toggleExercise,
+      toggleLab,
+      toggleLesson,
+      toggleMiniProject,
+      togglePortfolioProject,
+      toggleSkillCheck,
+    ],
   );
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;

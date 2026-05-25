@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
 import { curriculum } from "../data/curriculum";
+import { labs, portfolioProjects, quizzes, skillChecks } from "../data/premiumContent";
 import { useProgress } from "../hooks/useProgress";
 import { calculateOverallProgress, calculatePartProgress, getActivityStreak, getContinueTarget } from "../utils/progress";
 import { ProgressBar } from "../components/UI/ProgressBar";
@@ -80,6 +81,22 @@ export function DashboardPage() {
         <div className="stat-panel">
           <span>Learning activity</span>
           <strong>{streak} day streak</strong>
+        </div>
+        <div className="stat-panel">
+          <span>Premium labs</span>
+          <strong>{progress.completedLabIds.length}/{labs.length}</strong>
+        </div>
+        <div className="stat-panel">
+          <span>Quizzes</span>
+          <strong>{progress.completedQuizIds.length}/{quizzes.length}</strong>
+        </div>
+        <div className="stat-panel">
+          <span>Skill checks</span>
+          <strong>{progress.completedSkillCheckIds.length}/{skillChecks.length}</strong>
+        </div>
+        <div className="stat-panel">
+          <span>Portfolio projects</span>
+          <strong>{progress.completedPortfolioProjectIds.length}/{portfolioProjects.length}</strong>
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 import { ArrowLeft, Play } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { curriculum } from "../data/curriculum";
+import { labs, quizzes } from "../data/premiumContent";
 import { useProgress } from "../hooks/useProgress";
 import { calculatePartProgress } from "../utils/progress";
 import { ProgressBar } from "../components/UI/ProgressBar";
@@ -17,6 +18,8 @@ export function PartDetailPage() {
 
   const partProgress = calculatePartProgress(part, progress);
   const nextLesson = part.lessons.find((lesson) => !progress.completedLessonIds.includes(lesson.id)) ?? part.lessons[0];
+  const partLabs = labs.filter((lab) => lab.partId === part.id);
+  const partQuizzes = quizzes.filter((quiz) => quiz.partId === part.id);
 
   return (
     <section className="page-stack">
@@ -80,6 +83,43 @@ export function PartDetailPage() {
         <div className="content-panel">
           <span className="eyebrow">Common beginner trap</span>
           <p>{part.commonBeginnerTrap}</p>
+        </div>
+      </div>
+
+      <div className="two-column">
+        <div className="content-panel">
+          <h3>Hands-on labs</h3>
+          {partLabs.length ? (
+            partLabs.map((lab) => (
+              <Link className="list-row" key={lab.id} to={`/labs/${lab.id}`}>
+                <span>Lab</span>
+                <div>
+                  <strong>{lab.title}</strong>
+                  <p>{lab.goal}</p>
+                </div>
+                <StatusBadge status={progress.completedLabIds.includes(lab.id) ? "Completed" : "Not Started"} />
+              </Link>
+            ))
+          ) : (
+            <p className="muted">No premium lab is attached to this part yet.</p>
+          )}
+        </div>
+        <div className="content-panel">
+          <h3>Quiz checkpoints</h3>
+          {partQuizzes.length ? (
+            partQuizzes.map((quiz) => (
+              <Link className="list-row" key={quiz.id} to={`/quizzes/${quiz.id}`}>
+                <span>Quiz</span>
+                <div>
+                  <strong>{quiz.title}</strong>
+                  <p>{quiz.questions.length} scenario questions</p>
+                </div>
+                <StatusBadge status={progress.completedQuizIds.includes(quiz.id) ? "Completed" : "Not Started"} />
+              </Link>
+            ))
+          ) : (
+            <p className="muted">No quiz checkpoint is attached to this part yet.</p>
+          )}
         </div>
       </div>
 

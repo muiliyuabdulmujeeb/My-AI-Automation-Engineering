@@ -15,7 +15,7 @@ This section should be updated as the project progresses.
 
 | Metric | Value |
 |---|---|
-| Total sessions/tasks recorded | 13 |
+| Total sessions/tasks recorded | 17 |
 | Total input tokens | Not available in current Codex environment |
 | Total cached input tokens | Not available in current Codex environment |
 | Total output tokens | Not available in current Codex environment |
@@ -886,6 +886,307 @@ Not available in current Codex environment. Estimated total usage for this phase
 - Continue turning the richest topics into full hands-on labs with step-by-step code walkthroughs.
 - Add quizzes/checkpoints to test understanding after each major part.
 - Add project rubrics for Part 26 portfolio builds.
+
+---
+
+### Session 014: Phase A Premium Learning Data Model
+
+**Date/time:** 2026-05-25, Africa/Lagos timezone
+
+**Project/repo:** AI Automation / local workspace at `C:\Users\Kangchie\Documents\projects\AI Automation`
+
+**Codex model used:** GPT-5 based Codex coding agent
+
+**Prompt/task summary:**
+
+Inspect the current app and begin upgrading it from roadmap viewer to premium AI Automation Engineering bootcamp by adding typed support for labs, quizzes, skill checks, learning paths, portfolio projects, rubrics, and expanded progress tracking.
+
+**Work completed:**
+
+- Inspected the current folder structure, routing, curriculum model, progress hook, project page, and localStorage progress flow.
+- Diagnosed the main weakness: existing app functionality is solid, but premium learning objects were missing.
+- Extended TypeScript types with labs, lab steps, code examples, quizzes, quiz questions, skill checks, rubrics, learning paths, and portfolio projects.
+- Extended progress tracking with backwards-safe fields for completed labs, completed quizzes, quiz scores, completed skill checks, completed portfolio projects, and active learning path.
+- Added a separate `src/data/premiumContent.ts` data module to avoid dumping every new learning object into the existing curriculum file.
+- Added career-critical labs, quizzes, scenario skill checks, learning paths, shared rubrics, and 13 serious portfolio project records.
+
+**Files changed:**
+
+- `src/types/curriculum.ts` - added premium learning object types and progress fields.
+- `src/utils/progress.ts` - added default progress fields for labs, quizzes, skill checks, portfolio projects, and active path.
+- `src/hooks/useProgress.tsx` - added backwards-safe progress shaping and new progress actions.
+- `src/data/premiumContent.ts` - created premium learning content data module.
+- `docs/codex_usage_audit.md` - added this Phase A audit entry.
+
+**Tests run:**
+
+```bash
+npm.cmd run build
+npm.cmd run lint
+```
+
+**Test result:**
+
+Both checks passed after the data model and progress updates.
+
+**Token usage:**
+
+| Token type | Value |
+|---|---|
+| Input tokens | Not available in current Codex environment |
+| Cached input tokens | Not available in current Codex environment |
+| Output tokens | Not available in current Codex environment |
+| Reasoning tokens | Not available in current Codex environment |
+| Total tokens | Not available in current Codex environment |
+
+**Estimated cost/credits:**
+
+Not available in current Codex environment. Estimated total usage for this phase: medium session, likely 25k-55k tokens. This is an estimate only because exact token telemetry was not available.
+
+**Result:** Success
+
+**Follow-up needed:**
+
+- Add UI routes/pages for labs, quizzes, skill checks, learning paths, and portfolio project detail.
+- Wire new progress actions into the app.
+- Update README and validate Docker after UI integration.
+
+---
+
+### Session 015: Phase A UI for Labs, Quizzes, Skill Checks, Paths, and Project Hub
+
+**Date/time:** 2026-05-25, Africa/Lagos timezone
+
+**Project/repo:** AI Automation / local workspace at `C:\Users\Kangchie\Documents\projects\AI Automation`
+
+**Codex model used:** GPT-5 based Codex coding agent
+
+**Prompt/task summary:**
+
+Expose the new premium learning objects in the app without rebuilding the app or breaking existing lesson/progress functionality.
+
+**Work completed:**
+
+- Added routes and sidebar navigation for learning paths, labs, quizzes, skill checks, and premium portfolio project detail pages.
+- Added a Learning Paths page with active path tracking.
+- Added Labs list and Lab detail pages with steps, code, expected output, debugging checks, completion criteria, and portfolio value.
+- Added Quizzes list and Quiz detail pages with answer selection, scoring, explanations, and localStorage completion.
+- Added Skill Checks page with scenario tasks, requirements, expected solution outlines, and rubrics.
+- Rebuilt the Projects page into a portfolio project hub with domain filtering and detail links.
+- Added Portfolio Project detail page with business problem, architecture, workflow, database schema, API design, prompt design, testing, deployment, security, deliverables, README/case-study/demo guidance, rubrics, portfolio explanation, and interview explanation.
+- Added part-level links to attached labs and quizzes.
+- Added new progress stats for labs, quizzes, skill checks, and portfolio projects.
+- Updated README feature list.
+
+**Files changed:**
+
+- `src/App.tsx` - added new learning routes.
+- `src/components/Navigation/Sidebar.tsx` - added navigation links for paths, labs, quizzes, and skill checks.
+- `src/pages/LearningPathsPage.tsx` - created guided path page.
+- `src/pages/LabsPage.tsx` - created labs index.
+- `src/pages/LabDetailPage.tsx` - created lab detail workflow.
+- `src/pages/QuizzesPage.tsx` - created quiz index.
+- `src/pages/QuizDetailPage.tsx` - created quiz-taking UI.
+- `src/pages/SkillChecksPage.tsx` - created skill check page.
+- `src/pages/ProjectsPage.tsx` - rebuilt project hub around premium portfolio projects.
+- `src/pages/PortfolioProjectDetailPage.tsx` - created full project blueprint page.
+- `src/pages/PartDetailPage.tsx` - added linked labs and quiz checkpoints.
+- `src/pages/DashboardPage.tsx` - added premium learning progress stats.
+- `src/pages/ProgressPage.tsx` - added premium learning progress stats.
+- `src/styles.css` - added styles for options, rubrics, and section grids.
+- `README.md` - documented new learning features.
+- `docs/codex_usage_audit.md` - added this UI phase audit entry.
+
+**Tests run:**
+
+```bash
+npm.cmd run build
+npm.cmd run lint
+```
+
+**Test result:**
+
+Both checks passed after UI integration.
+
+**Token usage:**
+
+| Token type | Value |
+|---|---|
+| Input tokens | Not available in current Codex environment |
+| Cached input tokens | Not available in current Codex environment |
+| Output tokens | Not available in current Codex environment |
+| Reasoning tokens | Not available in current Codex environment |
+| Total tokens | Not available in current Codex environment |
+
+**Estimated cost/credits:**
+
+Not available in current Codex environment. Estimated total usage for this phase: medium-to-large session, likely 30k-70k tokens. This is an estimate only because exact token telemetry was not available.
+
+**Result:** Success
+
+**Follow-up needed:**
+
+- Browser-check the new routes.
+- Rebuild and rerun Docker so the premium learning UI is included in the container.
+- Add stricter review pass for which labs/quizzes need more depth.
+
+---
+
+### Session 016: Validate Premium Bootcamp Upgrade and Docker Runtime
+
+**Date/time:** 2026-05-25, Africa/Lagos timezone
+
+**Project/repo:** AI Automation / local workspace at `C:\Users\Kangchie\Documents\projects\AI Automation`
+
+**Codex model used:** GPT-5 based Codex coding agent
+
+**Prompt/task summary:**
+
+Validate the premium curriculum upgrade, run required checks, rebuild Docker, run the upgraded app in Docker, and verify the new learning routes.
+
+**Work completed:**
+
+- Ran dependency install check.
+- Ran production build.
+- Ran TypeScript lint/type-check.
+- Confirmed `npm test` is not configured and recorded it honestly.
+- Restarted Docker Desktop when the Docker engine was unavailable.
+- Rebuilt the Docker image with the premium bootcamp upgrade.
+- Ran the upgraded app container on `http://localhost:8080`.
+- Verified the new premium routes return HTTP 200:
+  - `/paths`
+  - `/labs`
+  - `/quizzes`
+  - `/skill-checks`
+  - `/projects/nigeria-macroeconomic-intelligence-pipeline`
+- Checked container status and logs.
+
+**Files changed:**
+
+- `docs/codex_usage_audit.md` - added this validation audit entry.
+
+**Tests run:**
+
+```bash
+npm.cmd install
+npm.cmd run build
+npm.cmd run lint
+npm.cmd test
+docker ps
+docker build -t ai-automation-learning-app .
+docker run --rm -d --name ai-automation-learning-app-test -p 8080:8080 -e PORT=8080 ai-automation-learning-app
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/paths
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/labs
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/quizzes
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/skill-checks
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/projects/nigeria-macroeconomic-intelligence-pipeline
+docker ps --filter "name=ai-automation-learning-app-test"
+docker logs --tail 15 ai-automation-learning-app-test
+```
+
+**Test result:**
+
+`npm.cmd install`, `npm.cmd run build`, and `npm.cmd run lint` passed. `npm.cmd test` failed because no `test` script is configured in `package.json`. Docker build and container run passed. The upgraded premium learning routes returned HTTP 200, and container logs showed Nginx serving the routes correctly.
+
+**Token usage:**
+
+| Token type | Value |
+|---|---|
+| Input tokens | Not available in current Codex environment |
+| Cached input tokens | Not available in current Codex environment |
+| Output tokens | Not available in current Codex environment |
+| Reasoning tokens | Not available in current Codex environment |
+| Total tokens | Not available in current Codex environment |
+
+**Estimated cost/credits:**
+
+Not available in current Codex environment. Estimated total usage for this phase: medium session, likely 15k-35k tokens. This is an estimate only because exact token telemetry was not available.
+
+**Result:** Success
+
+**Follow-up needed:**
+
+- Add a real test runner and `npm test` script.
+- Continue deepening individual labs with more full-code walkthroughs over time.
+- Review quiz difficulty and add more scenario-specific questions.
+
+---
+
+### Session 017: Containerized Smoke Test and Render Deployment Review
+
+**Date/time:** 2026-05-25 18:31:33 +01:00, Africa/Lagos timezone
+
+**Project/repo:** AI Automation / local workspace at `C:\Users\Kangchie\Documents\projects\AI Automation`
+
+**Codex model used:** GPT-5 based Codex coding agent
+
+**Prompt/task summary:**
+
+Perform a smoke test using the containerized version of the app and cross-check `render.md` to make sure the Render deployment instructions are current.
+
+**Work completed:**
+
+- Confirmed the Docker container `ai-automation-learning-app-test` was running on `http://localhost:8080`.
+- Performed HTTP smoke checks against the dashboard, learning paths, labs, quiz, skill checks, project detail, part detail, progress, and notes routes.
+- Used the in-app browser to verify the Docker-served app renders the main UI, premium learning routes, lab content, quiz content, portfolio project content, progress page, and notes page.
+- Captured a visual smoke-test screenshot from the Docker-served dashboard.
+- Checked browser console logs for warnings or errors and found none.
+- Checked Nginx container logs and confirmed the tested routes were served successfully.
+- Cross-checked Render documentation for static sites, redirects/rewrites, Docker deployment, and web service port binding.
+- Updated `render.md` with current deployment settings, including `npm ci && npm run build`, React Router rewrite instructions, premium route smoke-test list, Node version guidance, and Docker Web Service settings.
+- Re-ran local build and lint after the documentation update.
+
+**Files changed:**
+
+- `render.md` - updated Render deployment instructions for Static Site and Docker Web Service deployment.
+- `docs/codex_usage_audit.md` - added this smoke-test and deployment-review audit entry.
+
+**Tests run:**
+
+```bash
+docker ps --filter "name=ai-automation-learning-app-test" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/paths
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/labs
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/labs/part-3-premium-lab
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/quizzes
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/quizzes/part-3-quiz
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/skill-checks
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/projects
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/projects/nigeria-macroeconomic-intelligence-pipeline
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/parts/part-4
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/parts/part-4/lessons/part-4-databases-for-ai-automation-concepts
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/progress
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/notes
+docker logs --tail 80 ai-automation-learning-app-test
+npm.cmd run build
+npm.cmd run lint
+```
+
+**Test result:**
+
+All HTTP smoke routes returned `200`. The browser-render smoke test confirmed the app shell and premium content routes rendered from the Docker container, and a dashboard screenshot was captured in the Codex session. Browser console logs contained no warnings or errors. Docker logs showed Nginx serving the tested routes. `npm.cmd run build` and `npm.cmd run lint` both passed. `npm test` was not run in this session because the project still has no configured `test` script.
+
+**Token usage:**
+
+| Token type | Value |
+|---|---|
+| Input tokens | Not available in current Codex environment |
+| Cached input tokens | Not available in current Codex environment |
+| Output tokens | Not available in current Codex environment |
+| Reasoning tokens | Not available in current Codex environment |
+| Total tokens | Not available in current Codex environment |
+
+**Estimated cost/credits:**
+
+Not available in current Codex environment. Estimated total usage for this phase: medium session, likely 10k-25k tokens. This is an estimate only because exact token telemetry was not available.
+
+**Result:** Success
+
+**Follow-up needed:**
+
+- Add an automated smoke-test script so these route checks can be repeated with one command.
+- Add a real test runner and `npm test` script.
 
 ---
 

@@ -1,10 +1,14 @@
-import { BookOpen, ClipboardList, FileText, LayoutDashboard, Menu, TrendingUp, X } from "lucide-react";
+import { BookOpen, Brain, ClipboardCheck, ClipboardList, FileText, FlaskConical, LayoutDashboard, Map, Menu, TrendingUp, X } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { curriculum } from "../../data/curriculum";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/paths", label: "Paths", icon: Map },
+  { to: "/labs", label: "Labs", icon: FlaskConical },
+  { to: "/quizzes", label: "Quizzes", icon: Brain },
+  { to: "/skill-checks", label: "Skill Checks", icon: ClipboardCheck },
   { to: "/projects", label: "Projects", icon: ClipboardList },
   { to: "/progress", label: "Progress", icon: TrendingUp },
   { to: "/notes", label: "Notes", icon: FileText },

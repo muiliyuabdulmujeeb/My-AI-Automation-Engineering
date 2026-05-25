@@ -11,6 +11,11 @@ A deployable React + TypeScript learning platform for becoming an AI Automation 
 - Progress page with completed lessons, exercises, mini-projects, parts, streak, last opened lesson, and reset option
 - Projects page for the eight portfolio projects in Part 26
 - Notes page grouped by lesson
+- Guided learning paths
+- Hands-on labs with steps, expected outputs, debugging checks, and completion criteria
+- Scenario-based quizzes with scores and explanations
+- Skill checks with requirements, constraints, solution outlines, and rubrics
+- Premium portfolio project hub with architecture, schema, workflows, deployment, testing, demo scripts, and case-study guidance
 - localStorage persistence with no backend required
 - Responsive dark UI for mobile and desktop
 

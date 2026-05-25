@@ -5,6 +5,7 @@ This project is a static Vite React app. The recommended Render deployment path 
 Official Render docs:
 
 - [Static Sites](https://render.com/docs/static-sites/)
+- [Static Site Redirects and Rewrites](https://render.com/docs/redirects-rewrites/)
 - [Deploying on Render](https://render.com/docs/deploys/)
 - [Docker on Render](https://render.com/docs/docker/)
 
@@ -42,11 +43,20 @@ Use these settings:
 
 | Setting | Value |
 |---|---|
-| Build Command | `npm install && npm run build` |
+| Root Directory | Leave blank unless this app is inside a subfolder of your repo |
+| Build Command | `npm ci && npm run build` |
 | Publish Directory | `dist` |
 | Auto-Deploy | Yes, if you want every push to deploy |
 
 No environment variables are required for the current version.
+
+Because this repository includes `package-lock.json`, `npm ci` gives Render a reproducible install. If Render reports that the lockfile is out of sync, run `npm install` locally, commit the updated `package-lock.json`, and redeploy.
+
+If Render ever uses an older Node version for the Static Site build, add this environment variable:
+
+| Key | Value |
+|---|---|
+| `NODE_VERSION` | `22` |
 
 ### 4. Add React Router Rewrite Rule
 
@@ -76,7 +86,14 @@ After deployment, test these routes:
 
 ```text
 /
+/paths
+/labs
+/labs/part-3-premium-lab
+/quizzes
+/quizzes/part-3-quiz
+/skill-checks
 /projects
+/projects/nigeria-macroeconomic-intelligence-pipeline
 /progress
 /notes
 /parts/part-1
@@ -93,7 +110,9 @@ Use this only if you specifically want to deploy the Dockerized version.
 2. Select **Web Service**.
 3. Connect your GitHub repository.
 4. Set **Language** to `Docker`.
-5. Render will build from the repository `Dockerfile`.
+5. Set **Dockerfile Path** to `Dockerfile` if Render asks for it.
+6. Leave **Docker Command** blank so Render uses the `CMD` from the Dockerfile.
+7. Set **Health Check Path** to `/` if you want Render to check the app homepage.
 
 The Dockerfile in this project:
 
@@ -132,7 +151,7 @@ Use **Docker Web Service** if:
 
 Check:
 
-- Build command is `npm install && npm run build`.
+- Build command is `npm ci && npm run build`.
 - Publish directory is `dist`.
 - The build logs show a successful Vite build.
 
@@ -164,13 +183,13 @@ Check:
 
 - `package-lock.json` is committed.
 - Render is using a modern Node version.
-- The build command is exactly `npm install && npm run build`.
+- The build command is exactly `npm ci && npm run build`.
 - The failing log line is from TypeScript, Vite, or dependency installation.
 
 Run locally before pushing:
 
 ```bash
-npm install
+npm ci
 npm run lint
 npm run build
 ```
